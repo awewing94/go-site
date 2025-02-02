@@ -14,20 +14,28 @@ import (
 func main() {
     fmt.Println("main(): ")
     // Set up
-    tmplt, err := template.ParseFiles(
+    tmpls, err := template.ParseFiles(
         "./public/views/index.html",
+        "./public/views/navbar.html",
+
+        "./public/views/chess/chess.html",
+
+        "./public/views/store/store.html",
     )
     if err != nil {
         log.Fatalf("could not initialize templates: %+v", err)
     }
 
-    // Setup Server Endpoints
+    // Setup Rendering
     e := echo.New()
-    e.Renderer = endpoints.NewTemplateRenderer(tmplt)
+    e.Renderer = endpoints.NewTemplateRenderer(tmpls)
     e.Use(middleware.Logger())
     e.Static("/css", "css")
 
+    // Setup Endpoints
     e.GET("/", endpoints.HandleIndex)
+    e.GET("/chess", endpoints.HandleChess)
+    e.GET("/store", endpoints.HandleStore)
 
     // Start Server
     e.Logger.Fatal(e.Start(":58008"))

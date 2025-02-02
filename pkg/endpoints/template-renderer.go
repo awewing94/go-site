@@ -1,7 +1,6 @@
 package endpoints
 
 import (
-	"fmt"
 	"html/template"
 	"io"
 
@@ -17,6 +16,5 @@ func NewTemplateRenderer(tmpls *template.Template) TemplateRenderer {
 }
 
 func (t TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-    fmt.Println("Render(): ")
     return t.tmpl.ExecuteTemplate(w, name, data)
 }
