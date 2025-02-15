@@ -18,11 +18,6 @@ type IndexPage struct {
     Data string
 }
 
-type ChessPage struct {
-    Header
-    Data string
-}
-
 type StorePage struct {
     Header
     Products []database.Product
@@ -38,19 +33,6 @@ func HandleIndex(c echo.Context) error {
             Title: "My website",
         },
         Data: "some data here",
-    })
-}
-
-func HandleChess(c echo.Context) error {
-    if global.Debug {
-        fmt.Println("HandleChess():")
-    }
-
-    return c.Render(http.StatusOK, "chess", ChessPage{
-        Header: Header{
-            Title: "Chess",
-        },
-        Data: "Here's some data having to do with chess",
     })
 }
 

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go-site/pkg/endpoints"
+    "go-site/pkg/chess"
 	"html/template"
 	"log"
 	_ "net/http"
@@ -17,8 +18,10 @@ func main() {
     tmpls, err := template.ParseFiles(
         "./public/views/index.html",
         "./public/views/navbar.html",
+        "./public/views/header.html",
 
         "./public/views/chess/chess.html",
+        "./public/views/chess/board.html",
 
         "./public/views/store/store.html",
     )
@@ -34,9 +37,13 @@ func main() {
 
     // Setup Endpoints
     e.GET("/", endpoints.HandleIndex)
-    e.GET("/chess", endpoints.HandleChess)
     e.GET("/store", endpoints.HandleStore)
+    
+    // Chess Endpoints
+    e.GET("/chess", chess.HandleChess)
+    e.POST("/chess/move", chess.HandleChessMove)
 
     // Start Server
     e.Logger.Fatal(e.Start(":58008"))
 }
+

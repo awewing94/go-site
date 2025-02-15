@@ -1,5 +1,24 @@
 {{ block "chess" . }}
-    {{ template "navbar" . }}
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        {{ template "header" . }}
+        {{ template "navbar" . }}
 
-    <h1>In chess html!</h1>
+        <div id="chess">
+            <h1>In chess html!</h1>
+
+            <form hx-post="/chess/move" hx-target="#board" hx-swap="innerHTML">
+                <label for="move"></label>
+                <input name="move"></input>
+                <button type="submit">Send Move</button>
+            </form>
+
+            <div id="board">
+            </div>
+        </div>
+    </body>
+</html>
+
 {{ end }}
+
