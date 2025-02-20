@@ -1,3 +1,115 @@
-.red {
-    background-color: red;
+.container {
+    height: 600px;
+    width: 600px;
+    position: relative;
+    border: solid;
+
+    .board {
+        content: url("/public/assets/images/board_grid.svg");
+        height: inherit;
+        width: inherit;
+
+    }
+
+    .piece {
+        height: 13%;
+        width: auto;
+        position: absolute;
+    }
+
+    /* Black pieces */
+    .b_pawn {
+        content: url("/public/assets/images/b_pawn.svg");
+    }
+    .b_rook {
+        content: url("/public/assets/images/b_rook.svg");
+    }
+    .b_knight {
+        content: url("/public/assets/images/b_knight.svg");
+    }
+    .b_bishop {
+        content: url("/public/assets/images/b_bishop.svg");
+    }
+    .b_king {
+        content: url("/public/assets/images/b_king.svg");
+    }
+    .b_queen {
+        content: url("/public/assets/images/b_queen.svg");
+    }
+
+    /* White pieces */
+    .w_pawn {
+        content: url("/public/assets/images/w_pawn.svg");
+    }
+    .w_rook {
+        content: url("/public/assets/images/w_rook.svg");
+    }
+    .w_knight {
+        content: url("/public/assets/images/w_knight.svg");
+    }
+    .w_bishop {
+        content: url("/public/assets/images/w_bishop.svg");
+    }
+    .w_king {
+        content: url("/public/assets/images/w_king.svg");
+    }
+    .w_queen {
+        content: url("/public/assets/images/w_queen.svg");
+    }
+
+    /* Files */
+    .file_a {
+        left: -0.25%;
+    }
+    .file_b {
+        left: 12.25%;
+    }
+    .file_c {
+        left: 24.75%;
+    }
+    .file_d {
+        left: 37.25%;
+    }
+    .file_e {
+        left: 49.75%;
+    }
+    .file_f {
+        left: 62.25%;
+    }
+    .file_g {
+        left: 74.75%;
+    }
+    .file_h {
+        left: 87.25%;
+    }
+
+    /* Ranks */
+    .rank_1 {
+        top: 87.25%;
+    }
+    .rank_2 {
+        top: 74.75%;
+    }
+    .rank_3 {
+        top: 62.25%;
+    }
+    .rank_4 {
+        top: 49.75%;
+    }
+    .rank_5 {
+        top: 37.25%;
+    }
+    .rank_6 {
+        top: 24.75%;
+    }
+    .rank_7 {
+        top: 12.25%;
+    }
+    .rank_8 {
+        top: -0.25%;
+    }
+
 }
+
+
+

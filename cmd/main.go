@@ -34,6 +34,7 @@ func main() {
     e.Renderer = endpoints.NewTemplateRenderer(tmpls)
     e.Use(middleware.Logger())
     e.Static("/css", "css")
+    e.Static("/public/assets/images", "public/assets/images")
 
     // Setup Endpoints
     e.GET("/", endpoints.HandleIndex)

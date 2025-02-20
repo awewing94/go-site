@@ -1,24 +1,23 @@
-{{ block "chess" . }}
 <!DOCTYPE html>
 <html lang="en">
+    {{ template "header" . }}
     <body>
-        {{ template "header" . }}
         {{ template "navbar" . }}
-
         <div id="chess">
             <h1>In chess html!</h1>
 
+
+            <div id="board">
+                {{ template "board" . }}
+            </div>
+
+            <br/>
             <form hx-post="/chess/move" hx-target="#board" hx-swap="innerHTML">
                 <label for="move"></label>
                 <input name="move"></input>
                 <button type="submit">Send Move</button>
             </form>
-
-            <div id="board">
-            </div>
         </div>
     </body>
 </html>
-
-{{ end }}
 

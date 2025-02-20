@@ -14,7 +14,7 @@ type ChessPage struct {
 }
 
 type Board struct {
-    Board []string
+    Board []Piece
 }
 
 func HandleChess(c echo.Context) error {
@@ -22,7 +22,7 @@ func HandleChess(c echo.Context) error {
         fmt.Println("HandleChess():")
     }
 
-    return c.Render(http.StatusOK, "chess", ChessPage{
+    return c.Render(http.StatusOK, "chess.html", ChessPage{
         Title: "Chess",
         Data: "Here's some data having to do with chess",
     })
@@ -34,11 +34,10 @@ func HandleChessMove(c echo.Context) error {
     }
     
     makeMove(c.FormValue("move"))
-    var allMoves = getMoves()
-
+    var allPieces = getChessBoard()
 
     return c.Render(http.StatusOK, "board", Board{
-        Board: allMoves,
+        Board: allPieces,
     })
 }
 

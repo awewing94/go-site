@@ -1,3 +1,53 @@
 {{ block "board" . }}
-    {{ .Board }}
+
+<!-- Chess piece images provided by User:CBurnett under Creative Commons CC0 License. -->
+<div>
+    <div class="container">
+        <div class="board"></div>
+
+        {{ range . }}
+        <h1>thing is: {{ .PieceType }}</h1>
+        {{ end }}
+        <!-- White Pieces -->
+        <!--
+        <div class="piece w_pawn file_b rank_2"></div>
+        <div class="piece w_pawn file_c rank_2"></div>
+        <div class="piece w_pawn file_d rank_2"></div>
+        <div class="piece w_pawn file_e rank_4"></div>
+        <div class="piece w_pawn file_f rank_2"></div>
+        <div class="piece w_pawn file_g rank_2"></div>
+        <div class="piece w_pawn file_h rank_2"></div>
+        <div class="piece w_rook file_a rank_1"></div>
+        <div class="piece w_knight file_b rank_1"></div>
+        <div class="piece w_bishop file_c rank_1"></div>
+        <div class="piece w_queen file_d rank_1"></div>
+        <div class="piece w_king file_e rank_1"></div>
+        <div class="piece w_bishop file_f rank_1"></div>
+        <div class="piece w_knight file_f rank_3"></div>
+        <div class="piece w_rook file_h rank_1"></div>
+        -->
+
+        <!-- White Pieces -->
+        <!--
+        <div class="piece b_pawn file_a rank_7"></div>
+        <div class="piece b_pawn file_b rank_7"></div>
+        <div class="piece b_pawn file_c rank_7"></div>
+        <div class="piece b_pawn file_d rank_7"></div>
+        <div class="piece b_pawn file_e rank_5"></div>
+        <div class="piece b_pawn file_f rank_7"></div>
+        <div class="piece b_pawn file_g rank_7"></div>
+        <div class="piece b_pawn file_h rank_7"></div>
+        <div class="piece b_rook file_a rank_8"></div>
+        <div class="piece b_rook file_a rank_8"></div>
+        <div class="piece b_knight file_b rank_8"></div>
+        <div class="piece b_bishop file_c rank_8"></div>
+        <div class="piece b_queen file_d rank_8"></div>
+        <div class="piece b_king file_e rank_8"></div>
+        <div class="piece b_bishop file_f rank_8"></div>
+        <div class="piece b_knight file_g rank_8"></div>
+        <div class="piece b_rook file_h rank_8"></div>
+        -->
+    </div>
+</div>
+
 {{ end }}
