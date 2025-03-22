@@ -5,9 +5,12 @@
     <div class="container">
         <div class="board"></div>
 
-        {{ range . }}
-        <h1>thing is: {{ .PieceType }}</h1>
+        {{ range .Board.Pieces }}
+        <div class="piece {{ .ClassNames }}"></div>
         {{ end }}
+
+
+        <!-- Hard coded default board below -->
         <!-- White Pieces -->
         <!--
         <div class="piece w_pawn file_b rank_2"></div>

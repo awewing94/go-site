@@ -7,8 +7,9 @@ type Game struct {
 
 type Piece struct {
 	PieceType PieceType
-    Color     Color
-    Location  Location
+    Color       Color
+    Location    Location
+    ClassNames  string
 }
 
 type Location struct {
