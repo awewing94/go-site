@@ -11,7 +11,6 @@ import (
 )
 type ChessPage struct {
     Title string
-
     Board Board
 }
 
@@ -19,21 +18,20 @@ type Board struct {
     Pieces []Piece
 }
 
+var CurrentPage = ChessPage{
+    Board: Board{},
+    Title: "Chess Page",
+}
 
 func HandleChess(c echo.Context) error {
     if global.Debug {
         fmt.Println("HandleChess():")
     }
 
-    var board = Board{
-        Pieces: getPieces(),
-    }
-    PopulateUiFields(board)
+    CurrentPage.Board.Pieces = getPieces()
+    updateAllUiFields(CurrentPage.Board)
 
-    return c.Render(http.StatusOK, "chess.html", ChessPage{
-        Title: "Chess",
-        Board: board,
-    })
+    return c.Render(http.StatusOK, "chess.html", CurrentPage)
 }
 
 func HandleChessMove(c echo.Context) error {
@@ -41,28 +39,27 @@ func HandleChessMove(c echo.Context) error {
         fmt.Println("HandleChessMove():")
     }
     
-    makeMove(c.FormValue("move"))
+    var changeIndex = makeMove(c.FormValue("move"))
+    CurrentPage.Board.Pieces = getPieces()
+    updateUiField(CurrentPage.Board, changeIndex)
 
-    return c.Render(http.StatusOK, "board", Board{
-        Pieces: getPieces(),
-    })
+    return c.Render(http.StatusOK, "board.html", CurrentPage)
 }
 
-func PopulateUiFields(board Board) {
-    if global.Debug {
-        fmt.Println("PopulateUiFields(): ")
-    }
+func updateUiField(board Board, pieceIndex int) {
+    var piece = board.Pieces[pieceIndex]
+    piece.ClassNames = generateClassNames(piece)
+    board.Pieces[pieceIndex] = piece
+}
+
+func updateAllUiFields(board Board) {
     for i, piece := range board.Pieces {
-        piece.ClassNames = GenerateClassNames(piece)
+        piece.ClassNames = generateClassNames(piece)
         board.Pieces[i] = piece
     }
-
-    if global.Debug {
-        fmt.Println(board.Pieces)
-    }
 }
 
-func GenerateClassNames(piece Piece) string {
+func generateClassNames(piece Piece) string {
     if global.Debug {
         fmt.Println("GenerateClassNames(): ")
     }
