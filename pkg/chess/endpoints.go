@@ -39,20 +39,34 @@ func HandleChessMove(c echo.Context) error {
         fmt.Println("HandleChessMove():")
     }
     
-    var changeIndex = makeMove(c.FormValue("move"))
+    var changeIndex, err = makeMove(c.FormValue("move"))
+    if err != nil {
+        return c.Render(http.StatusBadRequest, err.Error(), CurrentPage)
+    }
+
     CurrentPage.Board.Pieces = getPieces()
+
+    fmt.Println("\tpieces piece: ", getPieces()[changeIndex])
+    fmt.Println("\tchangeIndex: ", changeIndex, "\n\tpiece: ", CurrentPage.Board.Pieces[changeIndex])
+
     updateUiField(CurrentPage.Board, changeIndex)
 
     return c.Render(http.StatusOK, "board.html", CurrentPage)
 }
 
 func updateUiField(board Board, pieceIndex int) {
+    if global.Debug {
+        fmt.Println("UpdateUiField(): ", pieceIndex)
+    }
     var piece = board.Pieces[pieceIndex]
     piece.ClassNames = generateClassNames(piece)
     board.Pieces[pieceIndex] = piece
 }
 
 func updateAllUiFields(board Board) {
+    if global.Debug {
+        fmt.Println("updateAllUiFields():")
+    }
     for i, piece := range board.Pieces {
         piece.ClassNames = generateClassNames(piece)
         board.Pieces[i] = piece

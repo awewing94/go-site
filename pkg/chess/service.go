@@ -3,6 +3,8 @@ package chess
 import (
 	"fmt"
 	"go-site/pkg/global"
+	"reflect"
+	"strings"
 )
 
 var CurrentGame = Game{}
@@ -17,28 +19,57 @@ Input:
 Output:
     int - index of the Piece that was moved
 */
-func makeMove(moveString string) int {
+func makeMove(moveString string) (int, error) {
     if global.Debug {
         fmt.Println("service.makeMove(): Making move ", moveString)
     }
 
-    // TODO - parse the move and move the piece
-    var move = Move{
-        Start: Location{
-            Rank: 0,
-            File: 0,
-        },
-        End: Location{
-            Rank: 1,
-            File: 0,
-        },
+    var move, err = parseMoveMoveFmt(moveString)
+    if err != nil {
+        return -1, err
     }
 
-    // hard code a move to test
-    CurrentGame.Pieces[0].Location.Rank = 3
-    // end 
+    // Remove piece first to avoid index changes
+    var endPieceIndex = findPieceIndexAtLocation(move.End)
+    if endPieceIndex != -1 {
+        CurrentGame.Pieces = removeAtIndex(CurrentGame.Pieces, endPieceIndex)
+    }
+
+    var startPieceIndex = findPieceIndexAtLocation(move.Start)
+    if startPieceIndex == -1 {
+        return -1, fmt.Errorf("No piece is located at the location %s", move.Start.ToString())
+    }
+
+    CurrentGame.Pieces[startPieceIndex].Location = move.End
     CurrentGame.Moves = append(CurrentGame.Moves, move)
-    return 0;
+    return startPieceIndex, nil;
+}
+
+func removeAtIndex(pieces []Piece, index int) []Piece {
+    var newPieces = make([]Piece, len(pieces) - 1)
+    var i, j = 0, 0
+    fmt.Println(len(pieces))
+    for ; i < len(pieces); i++ {
+        fmt.Println("i: ", i, "; j: ", j)
+        if i != index {
+            newPieces[j] = pieces[i]
+            j++
+        }
+    }
+
+    return newPieces
+}
+
+func findPieceIndexAtLocation(location Location) int {
+    for i := 0; i < len(CurrentGame.Pieces); i++ {
+        var piece = CurrentGame.Pieces[i]
+        var isEqual = reflect.DeepEqual(piece.Location, location)
+        if isEqual {
+            return i
+        }
+    }
+
+    return -1
 }
 
 func getPieces() []Piece {
@@ -51,6 +82,27 @@ func getPieces() []Piece {
     } else {
         initializeBoard()
         return CurrentGame.Pieces
+    }
+}
+
+func parseMoveMoveFmt(moveString string) (Move, error) {
+    var locations = strings.Split(moveString, "-")
+    if (len(locations) != 2 || len(locations[0]) != 2 || len(locations[1]) != 2) {
+        return Move{}, fmt.Errorf("Invalid move string supplied for move-move fmt. Format example: a1-a2.")
+    }
+
+    var move = Move{
+        Start: parseMoveMoveLocation(locations[0]),
+        End: parseMoveMoveLocation(locations[1]),
+    }
+
+    return move, nil
+}
+
+func parseMoveMoveLocation(locationString string) Location {
+    return Location{
+        Rank: int(locationString[1]) - '0' - 1,
+        File: int(locationString[0]) - 'a',
     }
 }
 

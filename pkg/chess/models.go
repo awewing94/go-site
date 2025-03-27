@@ -1,5 +1,7 @@
 package chess
 
+import "strconv"
+
 type Game struct {
 	Pieces  []Piece
 	Moves   []Move
@@ -39,4 +41,8 @@ const (
     White Color = 'w'
     Black       = 'b'
 )
+
+func (location *Location) ToString() string {
+    return string(location.File + 'a') + strconv.Itoa(int(location.Rank + 1))
+}
 
